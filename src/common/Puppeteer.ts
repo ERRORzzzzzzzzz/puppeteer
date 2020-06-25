@@ -35,6 +35,7 @@ import {
   clearQueryHandlers,
   QueryHandler,
 } from './QueryHandler';
+import { PUPPETEER_REVISIONS } from '../revisions';
 
 /**
  * The main Puppeteer class
@@ -58,7 +59,7 @@ import {
  * @public
  */
 export class Puppeteer {
-  _projectRoot: string;
+  private _projectRoot: string;
   _preferredRevision: string;
   _isPuppeteerCore: boolean;
   _changedProduct = false;
@@ -173,14 +174,13 @@ export class Puppeteer {
       this._lazyLauncher.product !== this._productName ||
       this._changedProduct
     ) {
-      const { packageJson } = readPkgUp.sync({ cwd: __dirname });
       switch (this._productName) {
         case 'firefox':
-          this._preferredRevision = packageJson.puppeteer.firefox_revision;
+          this._preferredRevision = PUPPETEER_REVISIONS.firefox;
           break;
         case 'chrome':
         default:
-          this._preferredRevision = packageJson.puppeteer.chromium_revision;
+          this._preferredRevision = PUPPETEER_REVISIONS.chromium;
       }
       this._changedProduct = false;
       this._lazyLauncher = Launcher(

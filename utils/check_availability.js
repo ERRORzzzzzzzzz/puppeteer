@@ -163,7 +163,10 @@ async function checkRollCandidate() {
     stableLinuxInfo.versions[0].branch_base_position,
     10
   );
-  const currentRevision = parseInt(packageJSON.puppeteer.chromium_revision, 10);
+  const currentRevision = parseInt(
+    require('../lib/cjs/revisions').PUPPETEER_REVISIONS.chromium,
+    10
+  );
 
   checkRangeAvailability({
     fromRevision: stableLinuxRevision,
